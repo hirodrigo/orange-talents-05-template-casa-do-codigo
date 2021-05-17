@@ -5,16 +5,18 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import br.com.zupacademy.rodrigo.casadocodigo.model.Autor;
+import br.com.zupacademy.rodrigo.casadocodigo.validator.UniqueValue;
 
 public class AutorForm {
 
 	@NotEmpty
 	private String nome;
-	
+
 	@Email
 	@NotEmpty
+	@UniqueValue(domainClass = Autor.class, fieldName = "email")
 	private String email;
-	
+
 	@Size(max = 400)
 	private String descricao;
 
