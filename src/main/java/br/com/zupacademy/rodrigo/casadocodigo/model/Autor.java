@@ -13,6 +13,10 @@ import javax.validation.constraints.Size;
 
 @Entity
 public class Autor {
+	
+	@Deprecated
+	public Autor() {
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
