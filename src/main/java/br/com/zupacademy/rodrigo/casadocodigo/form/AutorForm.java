@@ -24,16 +24,8 @@ public class AutorForm {
 		this.descricao = descricao;
 	}
 
-	public String getNome() {
-		return nome;
-	}
-
 	public String getEmail() {
 		return email;
-	}
-
-	public String getDescricao() {
-		return descricao;
 	}
 
 	public Autor toModel() {
