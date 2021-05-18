@@ -13,35 +13,38 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.zupacademy.rodrigo.casadocodigo.form.EstadoForm;
-import br.com.zupacademy.rodrigo.casadocodigo.model.Estado;
-import br.com.zupacademy.rodrigo.casadocodigo.repository.EstadoRepository;
+import br.com.zupacademy.rodrigo.casadocodigo.form.ClienteForm;
+import br.com.zupacademy.rodrigo.casadocodigo.model.Cliente;
+import br.com.zupacademy.rodrigo.casadocodigo.repository.ClienteRepository;
+import br.com.zupacademy.rodrigo.casadocodigo.validator.CpfOuCnpjValidator;
 import br.com.zupacademy.rodrigo.casadocodigo.validator.EstadoEPaisValidator;
-import br.com.zupacademy.rodrigo.casadocodigo.validator.EstadoUnicoNoPaisValidator;
 
 @RestController
-@RequestMapping("/estados")
-public class EstadoController {
+@RequestMapping("/clientes")
+public class ClienteController {
 
 	@Autowired
-	private EstadoRepository estadoRepository;
+	private ClienteRepository clienteRepository;
 
 	@Autowired
 	private EntityManager entityManager;
 	
 	@Autowired
-	private EstadoUnicoNoPaisValidator estadoUnicoNoPaisValidator;
+	private CpfOuCnpjValidator cpfOuCnpjValidator;
+	
+	@Autowired
+	private EstadoEPaisValidator estadoEPaisValidator;
 	
 	@InitBinder
 	public void init(WebDataBinder binder) {
-		binder.addValidators(estadoUnicoNoPaisValidator);
+		binder.addValidators(cpfOuCnpjValidator, estadoEPaisValidator);
 	}
 	
 	@PostMapping
 	@Transactional
-	public ResponseEntity<?> cadastrar(@RequestBody @Valid EstadoForm form) {
-		Estado estado = form.toModel(entityManager);
-		estadoRepository.save(estado);
+	public ResponseEntity<?> cadastrar(@RequestBody @Valid ClienteForm form) {
+		Cliente cliente = form.toModel(entityManager);
+		clienteRepository.save(cliente);
 		return ResponseEntity.ok().build();
 	}
 
