@@ -1,6 +1,7 @@
 package br.com.zupacademy.rodrigo.casadocodigo.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -9,11 +10,13 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.zupacademy.rodrigo.casadocodigo.dto.LivroDetalheDto;
 import br.com.zupacademy.rodrigo.casadocodigo.dto.LivroDto;
 import br.com.zupacademy.rodrigo.casadocodigo.form.LivroForm;
 import br.com.zupacademy.rodrigo.casadocodigo.model.Livro;
@@ -41,6 +44,15 @@ public class LivroController {
 	public List<LivroDto> listar(){
 		Iterable<Livro> livros = livroRepository.findAll();
 		return LivroDto.toDtoList(livros);
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<LivroDetalheDto> detalhar(@PathVariable Long id){
+		Optional<Livro> possivelLivro = livroRepository.findById(id);
+		if (possivelLivro.isPresent()) {
+			return ResponseEntity.ok(new LivroDetalheDto(possivelLivro.get()));
+		}
+		return ResponseEntity.notFound().build();
 	}
 
 }
