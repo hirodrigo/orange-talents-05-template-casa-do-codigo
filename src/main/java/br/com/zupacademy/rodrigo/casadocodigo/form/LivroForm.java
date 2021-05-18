@@ -83,7 +83,7 @@ public class LivroForm {
 		Assert.state(autor != null, "Um autor que não existe no banco está tentando sendo atrelado ao livro: " + idAutor);
 		Assert.state(categoria != null, "Uma categoria que não existe no banco está tentando sendo atrelada ao livro: " + idCategoria);
 		
-		return new Livro(titulo, resumo, sumario, preco, nPaginas, isbn, dataPublicacao, autor, categoria);
+		return new Livro(this.titulo, this.resumo, this.sumario, this.preco, this.nPaginas, this.isbn, this.dataPublicacao, autor, categoria);
 	}
 
 }
